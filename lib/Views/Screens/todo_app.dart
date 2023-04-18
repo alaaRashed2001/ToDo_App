@@ -4,6 +4,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 
 import '../../providers/lang_provider.dart';
+import '../Widgets/add_task_bottomsheet.dart';
 import '../Widgets/task_item.dart';
 
 class ToDoApp extends StatefulWidget {
@@ -45,6 +46,23 @@ class _ToDoAppState extends State<ToDoApp> {
       body: ListView.builder(
         itemCount: 20,
        itemBuilder: (context, index) => const OneTask(),
+      ),
+
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: Colors.redAccent,
+        onPressed: (){
+          showModalBottomSheet(
+            backgroundColor: Colors.amber[100],
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(4.r),
+            ),
+            context: context,
+            builder: (context) => const AddTaskBottomSheet(),
+          );
+        },
+        child: const Icon(
+            Icons.add
+        ),
       ),
     );
   }
