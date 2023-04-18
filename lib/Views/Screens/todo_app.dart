@@ -4,6 +4,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 
 import '../../providers/lang_provider.dart';
+import '../Widgets/task_item.dart';
 
 class ToDoApp extends StatefulWidget {
   const ToDoApp({Key? key}) : super(key: key);
@@ -40,6 +41,10 @@ class _ToDoAppState extends State<ToDoApp> {
                 size: 33,
               ))
         ],
+      ),
+      body: ListView.builder(
+        itemCount: 20,
+       itemBuilder: (context, index) => const OneTask(),
       ),
     );
   }
