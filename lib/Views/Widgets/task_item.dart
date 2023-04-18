@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class OneTask extends StatelessWidget {
   const OneTask({Key? key}) : super(key: key);
+  final bool isDone = false;
 
   @override
   Widget build(BuildContext context) {
@@ -28,11 +29,17 @@ class OneTask extends StatelessWidget {
                 fontSize: 22.sp,
               ),
             ),
-            const Icon(
-              Icons.close,
-              color: Colors.red,
-              size: 27,
-            )
+            isDone
+                ? const Icon(
+                    Icons.check,
+                    color: Colors.green,
+                    size: 27,
+                  )
+                : const Icon(
+                    Icons.close,
+                    color: Colors.red,
+                    size: 27,
+                  ),
           ],
         ),
       ),
