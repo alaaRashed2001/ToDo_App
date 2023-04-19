@@ -28,8 +28,8 @@ class _ToDoAppState extends State<ToDoApp> {
   }
 
   List allTasks = [
-    TaskModel(title: 'Call Mom', status: false),
-    TaskModel(title: 'GEM', status: false),
+    TaskModel(title: 'Call Mom', status: true),
+    TaskModel(title: 'GEM', status: true),
   ];
   addNewTasks() {
     setState(() {
@@ -88,7 +88,7 @@ class _ToDoAppState extends State<ToDoApp> {
                 '${calculateCompletedTasks()}/${allTasks.length}',
                 style: TextStyle(
                     fontSize: 44.sp,
-                    color: Colors.white,
+                    color:  calculateCompletedTasks() == allTasks.length ?   const Color.fromARGB(255, 142, 253, 200)  :  Colors.white,
                     fontWeight: FontWeight.bold),
               ),
             ),
