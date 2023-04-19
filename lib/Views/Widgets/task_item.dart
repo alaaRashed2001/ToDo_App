@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class OneTask extends StatelessWidget {
-  const OneTask({Key? key}) : super(key: key);
-  final bool isDone = false;
-
+  const OneTask({Key? key, required this.isDone, required this.title}) : super(key: key);
+  final bool isDone ;
+  final String title;
   @override
   Widget build(BuildContext context) {
     return FractionallySizedBox(
@@ -23,7 +23,7 @@ class OneTask extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              'data',
+              title,
               style: TextStyle(
                 color: Colors.white,
                 fontSize: 22.sp,
