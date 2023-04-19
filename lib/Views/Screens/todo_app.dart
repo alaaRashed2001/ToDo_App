@@ -14,32 +14,47 @@ class ToDoApp extends StatefulWidget {
 }
 
 class _ToDoAppState extends State<ToDoApp> {
-  late  TextEditingController taskEditingController;
+  late TextEditingController taskEditingController;
   @override
   void initState() {
     taskEditingController = TextEditingController();
     super.initState();
   }
+
   @override
   void dispose() {
     taskEditingController.dispose();
     super.dispose();
   }
-  List allTasks=[
+
+  List allTasks = [
     TaskModel(title: 'Call Mom', status: false),
     TaskModel(title: 'GEM', status: false),
   ];
-  addNewTasks(){
+  addNewTasks() {
     setState(() {
-      allTasks.add( TaskModel(title: taskEditingController.text, status: false));
+      allTasks.add(TaskModel(title: taskEditingController.text, status: false));
     });
   }
+
+  int calculateCompletedTasks() {
+    int completedTasks = 0;
+
+    for (var item in allTasks) {
+      if (item.status) {
+        completedTasks++;
+      }
+    }
+
+    return completedTasks;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color.fromRGBO(58, 66, 86, 0.7),
       appBar: AppBar(
-        backgroundColor: const Color.fromRGBO(58, 66, 86,1),
+        backgroundColor: const Color.fromRGBO(58, 66, 86, 1),
         elevation: 0,
         title: Text(
           AppLocalizations.of(context)!.todoTask,
@@ -63,28 +78,37 @@ class _ToDoAppState extends State<ToDoApp> {
         ],
       ),
       body: SizedBox(
-      width: double.infinity,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          ...allTasks.map((item) => OneTask(
-            title: item.title,
-            isDone: item.status,
-          ))
-        ],
+        width: double.infinity,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(top: 27),
+              child: Text(
+                '${calculateCompletedTasks()}/${allTasks.length}',
+                style: TextStyle(
+                    fontSize: 44.sp,
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold),
+              ),
+            ),
+            ...allTasks.map((item) => OneTask(
+                  title: item.title,
+                  isDone: item.status,
+                ),),
+          ],
+        ),
       ),
-    ),
-
       floatingActionButton: FloatingActionButton(
         backgroundColor: Colors.redAccent,
-        onPressed: (){
+        onPressed: () {
           showModalBottomSheet(
             backgroundColor: Colors.amber[100],
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(4.r),
             ),
             context: context,
-            builder: (context) =>  Padding(
+            builder: (context) => Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),
               child: Column(
                 children: [
@@ -102,7 +126,9 @@ class _ToDoAppState extends State<ToDoApp> {
                             labelText: AppLocalizations.of(context)!.addNewTask,
                           ),
                         ),
-                        SizedBox(height: 22.h,),
+                        SizedBox(
+                          height: 22.h,
+                        ),
                         TextButton(
                           onPressed: () {
                             addNewTasks();
@@ -110,9 +136,7 @@ class _ToDoAppState extends State<ToDoApp> {
                           },
                           child: Text(
                             AppLocalizations.of(context)!.add,
-                            style: TextStyle(
-                                fontSize: 22.sp
-                            ),
+                            style: TextStyle(fontSize: 22.sp),
                           ),
                         ),
                       ],
@@ -123,9 +147,7 @@ class _ToDoAppState extends State<ToDoApp> {
             ),
           );
         },
-        child: const Icon(
-            Icons.add
-        ),
+        child: const Icon(Icons.add),
       ),
     );
   }
