@@ -33,20 +33,6 @@ class _ToDoAppState extends State<ToDoApp> {
     TaskModel(title: 'GEM', status: false),
     TaskModel(title: 'Organize closet', status: true),
     TaskModel(title: 'Pay bills', status: false),
-    ////
-    TaskModel(title: 'Call Mom', status: true),
-    TaskModel(title: 'Update resume', status: false),
-    TaskModel(title: 'GEM', status: false),
-    TaskModel(title: 'Organize closet', status: true),
-    TaskModel(title: 'Pay bills', status: false),    TaskModel(title: 'Call Mom', status: true),
-    TaskModel(title: 'Update resume', status: false),
-    TaskModel(title: 'GEM', status: false),
-    TaskModel(title: 'Organize closet', status: true),
-    TaskModel(title: 'Pay bills', status: false),    TaskModel(title: 'Call Mom', status: true),
-    TaskModel(title: 'Update resume', status: false),
-    TaskModel(title: 'GEM', status: false),
-    TaskModel(title: 'Organize closet', status: true),
-    TaskModel(title: 'Pay bills', status: false),
   ];
   addNewTasks() {
     setState(() {
@@ -65,7 +51,11 @@ class _ToDoAppState extends State<ToDoApp> {
 
     return completedTasks;
   }
-
+changeStatus (int taskStatus){
+    setState(() {
+      allTasks[taskStatus]!.status = !allTasks[taskStatus]!.status;
+    });
+}
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -96,36 +86,40 @@ class _ToDoAppState extends State<ToDoApp> {
       ),
       body: SizedBox(
         width: double.infinity,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(top: 27),
-              child: Text(
-                '${calculateCompletedTasks()}/${allTasks.length}',
-                style: TextStyle(
-                    fontSize: 44.sp,
-                    color: calculateCompletedTasks() == allTasks.length
-                        ? const Color.fromARGB(255, 142, 253, 200)
-                        : Colors.white,
-                    fontWeight: FontWeight.bold),
-              ),
-            ),
-            Container(
-              height: MediaQuery.of(context).size.height * .76,
-             // color: const Color.fromRGBO(58, 66, 86, 1),
-              margin: const EdgeInsets.only(top: 11),
-              child: ListView.builder(
-                shrinkWrap: true,
-                physics: const BouncingScrollPhysics(),
-                itemCount: allTasks.length,
-                itemBuilder: (context, index) => OneTask(
-                  title: allTasks[index].title,
-                  isDone: allTasks[index].status,
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(top: 27),
+                child: Text(
+                  '${calculateCompletedTasks()}/${allTasks.length}',
+                  style: TextStyle(
+                      fontSize: 44.sp,
+                      color: calculateCompletedTasks() == allTasks.length
+                          ? const Color.fromARGB(255, 142, 253, 200)
+                          : Colors.white,
+                      fontWeight: FontWeight.bold),
                 ),
               ),
-            ),
-          ],
+              Container(
+                height: MediaQuery.of(context).size.height * .76,
+               // color: const Color.fromRGBO(58, 66, 86, 1),
+                margin: const EdgeInsets.only(top: 11),
+                child: ListView.builder(
+                  shrinkWrap: true,
+                  physics: const BouncingScrollPhysics(),
+                  itemCount: allTasks.length,
+                  itemBuilder: (context, index) => OneTask(
+                    title: allTasks[index].title,
+                    isDone: allTasks[index].status,
+                    changeStatus: changeStatus,
+                    indexStatus: index,
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
       floatingActionButton: FloatingActionButton(
