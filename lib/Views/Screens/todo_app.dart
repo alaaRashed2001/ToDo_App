@@ -40,9 +40,15 @@ class _ToDoAppState extends State<ToDoApp> {
     });
   }
 
-  deleteAnyTasks(int taskIndex) {
+  deleteAnyTask(int taskIndex) {
     setState(() {
       allTasks.remove(allTasks[taskIndex]);
+    });
+  }
+
+  deleteAllTasks(){
+    setState(() {
+      allTasks.removeRange(0, allTasks.length);
     });
   }
 
@@ -97,7 +103,7 @@ class _ToDoAppState extends State<ToDoApp> {
           ),
           InkWell(
             onTap: () {
-              ///
+              deleteAllTasks();
             },
             child: const Icon(
               Icons.delete_forever,
@@ -141,7 +147,7 @@ class _ToDoAppState extends State<ToDoApp> {
                     isDone: allTasks[index].status,
                     changeStatus: changeStatus,
                     indexTask: index,
-                    deleteTask: deleteAnyTasks,
+                    deleteTask: deleteAnyTask,
                   ),
                 ),
               ),
