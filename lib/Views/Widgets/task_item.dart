@@ -39,9 +39,11 @@ class OneTask extends StatelessWidget {
               Text(
                 title,
                 style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 22.sp,
-                ),
+                    color: isDone ? Colors.black54 : Colors.white,
+                    fontSize: 22.sp,
+                    decoration: isDone
+                        ? TextDecoration.lineThrough
+                        : TextDecoration.none),
               ),
               Row(
                 children: [
