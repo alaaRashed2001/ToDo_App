@@ -2,16 +2,24 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class OneTask extends StatelessWidget {
-  const OneTask({Key? key, required this.isDone, required this.title, required this.changeStatus, required this.indexStatus}) : super(key: key);
-  final bool isDone ;
+  const OneTask(
+      {Key? key,
+      required this.isDone,
+      required this.title,
+      required this.changeStatus,
+      required this.indexTask,
+      required this.deleteTask})
+      : super(key: key);
+  final bool isDone;
   final String title;
   final Function changeStatus;
-  final int indexStatus;
+  final int indexTask;
+  final Function deleteTask;
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap:(){
-        changeStatus(indexStatus);
+      onTap: () {
+        changeStatus(indexTask);
       },
       child: FractionallySizedBox(
         widthFactor: 0.9,
@@ -35,17 +43,28 @@ class OneTask extends StatelessWidget {
                   fontSize: 22.sp,
                 ),
               ),
-              isDone
-                  ? const Icon(
-                      Icons.check,
-                      color: Colors.green,
+              Row(
+                children: [
+                  Icon(
+                    isDone ? Icons.check : Icons.close,
+                    color: isDone ? Colors.green : Colors.red,
+                    size: 27,
+                  ),
+                  SizedBox(
+                    width: 18.w,
+                  ),
+                  InkWell(
+                    onTap: () {
+                      deleteTask(indexTask);
+                    },
+                    child: const Icon(
+                      Icons.delete,
                       size: 27,
-                    )
-                  : const Icon(
-                      Icons.close,
-                      color: Colors.red,
-                      size: 27,
+                      color: Colors.redAccent,
                     ),
+                  )
+                ],
+              ),
             ],
           ),
         ),

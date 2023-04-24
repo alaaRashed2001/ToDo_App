@@ -40,6 +40,12 @@ class _ToDoAppState extends State<ToDoApp> {
     });
   }
 
+  deleteAnyTasks(int taskIndex) {
+    setState(() {
+      allTasks.remove(allTasks[taskIndex]);
+    });
+  }
+
   int calculateCompletedTasks() {
     int completedTasks = 0;
 
@@ -51,11 +57,13 @@ class _ToDoAppState extends State<ToDoApp> {
 
     return completedTasks;
   }
-changeStatus (int taskStatus){
+
+  changeStatus(int taskStatus) {
     setState(() {
       allTasks[taskStatus]!.status = !allTasks[taskStatus]!.status;
     });
-}
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -73,15 +81,33 @@ changeStatus (int taskStatus){
         ),
         centerTitle: true,
         actions: [
-          IconButton(
-              onPressed: () async {
-                await Provider.of<LangProviders>(context, listen: false)
-                    .changeLanguage();
-              },
-              icon: const Icon(
-                Icons.language,
-                size: 33,
-              ))
+          InkWell(
+            onTap: () async {
+              await Provider.of<LangProviders>(context, listen: false)
+                  .changeLanguage();
+            },
+            child: const Icon(
+              Icons.language,
+              size: 33,
+              color: Colors.black54,
+            ),
+          ),
+          SizedBox(
+            width: 4.w,
+          ),
+          InkWell(
+            onTap: () {
+              ///
+            },
+            child: const Icon(
+              Icons.delete_forever,
+              size: 33,
+              color: Colors.red,
+            ),
+          ),
+          SizedBox(
+            width: 6.w,
+          ),
         ],
       ),
       body: SizedBox(
@@ -104,7 +130,7 @@ changeStatus (int taskStatus){
               ),
               Container(
                 height: MediaQuery.of(context).size.height * .76,
-               // color: const Color.fromRGBO(58, 66, 86, 1),
+                // color: const Color.fromRGBO(58, 66, 86, 1),
                 margin: const EdgeInsets.only(top: 11),
                 child: ListView.builder(
                   shrinkWrap: true,
@@ -114,7 +140,8 @@ changeStatus (int taskStatus){
                     title: allTasks[index].title,
                     isDone: allTasks[index].status,
                     changeStatus: changeStatus,
-                    indexStatus: index,
+                    indexTask: index,
+                    deleteTask: deleteAnyTasks,
                   ),
                 ),
               ),
